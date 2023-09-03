@@ -16,7 +16,6 @@ export default function Admin(){
 
     axios.defaults.headers.common['Authorization'] = token;
 
-
     useEffect(() => {
         if (!token) {
             return navigate('/login');
