@@ -1,5 +1,5 @@
 import './assets/App.css';
-import {Routes,Route} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import {useEffect} from "react";
 import axios from "axios";
 
@@ -10,25 +10,20 @@ import Admin from "./views/admin/admin";
 import AdminProducts from "./views/admin/admin-product/admin-products";
 
 
-
-
 function App() {
 
     useEffect(() => {
 
-        (async()=>{
-            try{
-                const result=await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`)
-                console.log(result)
-            }
-            catch (error){
+        (async () => {
+            try {
+                const result = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`)
+            } catch (error) {
                 console.log("錯誤")
             }
         })()
     }, [])
 
-  return (
-    <div className="App">
+    return (<div className="App">
 
         <Routes>
             <Route path="/" element={<Home/>}></Route>
@@ -41,7 +36,7 @@ function App() {
             </Route>
         </Routes>
 
-    </div>
-  );
+    </div>);
 }
+
 export default App;
