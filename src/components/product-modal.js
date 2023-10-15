@@ -1,5 +1,6 @@
 import axios from "axios";
 import {useState, useEffect} from "react";
+import {message} from 'antd';
 
 export default function ProductModal({closeProductModal, getProducts, type, tempProduct}) {
     const [tempData, setTempData] = useState({
@@ -68,8 +69,10 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             );
             getProducts()
             closeProductModal()
+            message.success("可以")
         } catch (error) {
             console.log(error);
+            message.error("不可以")
         }
     }
 
