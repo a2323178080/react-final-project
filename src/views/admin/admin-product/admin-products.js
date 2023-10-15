@@ -1,43 +1,87 @@
 import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import ProductModal from "../../../components/product-modal";
-import { Modal } from "bootstrap";
-export default function AdminProducts(){
+import DeleteModal from "../../../components/delete-modal";
+import {Modal} from "bootstrap";
+import {Pagination} from 'antd';
+
+export default function AdminProducts() {
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({});
-    const productModal=useRef(null)
+    const productModal = useRef(null)
+    const deleteModal = useRef(null);
+
+    // type: 決定 modal 展開的用途
+    const [type, setType] = useState('create'); // edit
+    const [tempProduct, setTempProduct] = useState({});
 
     useEffect(() => {
         productModal.current = new Modal('#productModal', {
             backdrop: 'static',
         });
+        deleteModal.current = new Modal('#deleteModal', {
+            backdrop: 'static',
+        });
+        getProducts();
 
-        (async () => {
-            const productRes = await axios.get(
-                `/v2/api/${process.env.REACT_APP_API_PATH}/admin/products`,
-            );
-            setProducts(productRes.data.products);
-            setPagination(productRes.data.pagination);
-        })();
     }, []);
 
-    const openProductModal = () => {
+    const getProducts = async (page = 1) => {
+        const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products?page=${page}`,);
+        setProducts(productRes.data.products);
+        setPagination(productRes.data.pagination);
+    };
+    const openProductModal = (type, product) => {
+        setType(type);
+        setTempProduct(product);
         productModal.current.show();
     }
     const closeProductModal = () => {
         productModal.current.hide();
     }
+    const openDeleteModal = (product) => {
+        setTempProduct(product);
+        deleteModal.current.show();
+    };
+    const closeDeleteModal = () => {
+        deleteModal.current.hide();
+    };
+    const deleteProduct = async (id) => {
+        try {
+            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${id}`);
+            if (res.data.success) {
+                getProducts();
+                deleteModal.current.hide();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    return(
-    <div className="p-3">
+    const [current, setCurrent] = useState(1);
+    const switchPage = (page) => {
+        getProducts(page)
+        setCurrent(page);
+    };
+
+    return (<div className="p-3">
+        <DeleteModal
+            close={closeDeleteModal}
+            text={tempProduct.title}
+            handleDelete={deleteProduct}
+            id={tempProduct.id}
+        />
         <h3>產品列表</h3>
-        <ProductModal closeProductModal={closeProductModal}/>
-        <hr />
+        <ProductModal closeProductModal={closeProductModal}
+                      getProducts={getProducts}
+                      tempProduct={tempProduct}
+                      type={type}/>
+        <hr/>
         <div className='text-end'>
             <button
                 type='button'
                 className='btn btn-primary btn-sm'
-                onClick={openProductModal}
+                onClick={() => openProductModal('create', {})}
             >
                 建立新商品
             </button>
@@ -54,28 +98,33 @@ export default function AdminProducts(){
             </thead>
             <tbody>
             {products.map((product) => {
-                return (
-                    <tr key={product.id}>
-                        <td>{product.category}</td>
-                        <td>{product.title}</td>
-                        <td>{product.price}</td>
-                        <td>{product.is_enabled ? '啟用' : '未啟用'}</td>
-                        <td>
-                            <button type='button' className='btn btn-primary btn-sm'>
-                                編輯
-                            </button>
-                            <button
-                                type='button'
-                                className='btn btn-outline-danger btn-sm ms-2'
-                            >
-                                刪除
-                            </button>
-                        </td>
-                    </tr>
-                );
+                return (<tr key={product.id}>
+                    <td>{product.category}</td>
+                    <td>{product.title}</td>
+                    <td>{product.price}</td>
+                    <td>{product.is_enabled ? '啟用' : '未啟用'}</td>
+                    <td>
+                        <button
+                            type='button'
+                            className='btn btn-primary btn-sm'
+                            onClick={() => openProductModal('edit', product)}
+                        >
+                            編輯
+                        </button>
+                        <button
+                            type='button'
+                            className='btn btn-outline-danger btn-sm ms-2'
+                            onClick={() => openDeleteModal(product)}
+                        >
+                            刪除
+                        </button>
+                    </td>
+                </tr>);
             })}
             </tbody>
         </table>
+
+        <Pagination current={current} onChange={switchPage} total={parseInt(pagination.total_pages, 10) * 10}/>
 
         <nav aria-label='Page navigation example'>
             <ul className='pagination'>
@@ -84,14 +133,12 @@ export default function AdminProducts(){
                         <span aria-hidden='true'>&laquo;</span>
                     </a>
                 </li>
-                {[...new Array(5)].map((_, i) => (
-                    // eslint-disable-next-line react/no-array-index-key
+                {[...new Array(5)].map((_, i) => (// eslint-disable-next-line react/no-array-index-key
                     <li className='page-item' key={`${i}_page`}>
                         <a className={`page-link ${i + 1 === 1 && 'active'}`} href='/'>
                             {i + 1}
                         </a>
-                    </li>
-                ))}
+                    </li>))}
                 <li className='page-item'>
                     <a className='page-link' href='/' aria-label='Next'>
                         <span aria-hidden='true'>&raquo;</span>
@@ -99,6 +146,5 @@ export default function AdminProducts(){
                 </li>
             </ul>
         </nav>
-    </div>
-    )
+    </div>)
 }
