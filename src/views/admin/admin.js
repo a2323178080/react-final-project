@@ -1,6 +1,7 @@
 import {Outlet, useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {useEffect} from 'react';
+import Message from "../../components/message";
 
 export default function Admin() {
     const navigate = useNavigate();
@@ -34,6 +35,8 @@ export default function Admin() {
 
     return (
         <div>
+
+            <Message/>
             <nav className='navbar navbar-expand-lg bg-dark'>
                 <div className='container-fluid'>
                     <p className='text-white mb-0'>HEX EATS 後台管理系統</p>
