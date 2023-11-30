@@ -32,7 +32,6 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             setTempData(tempProduct);
         }
     }, [type, tempProduct]);
-
     const handleChange = (e) => {
         const {value, name} = e.target;
         if (['price', 'origin_price'].includes(name)) {
@@ -75,6 +74,21 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             message.error(error.response.data.message.join("、"))
         }
     }
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            // 使用FileReader读取文件并将其转换为DataURL
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setTempData({
+                    ...tempData,
+                    imageUrl: reader.result,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     return (
         <div
@@ -109,6 +123,8 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                                             id='image'
                                             placeholder='請輸入圖片連結'
                                             className='form-control'
+                                            onChange={handleChange}
+                                            value={tempData.imageUrl}
                                         />
                                     </label>
                                 </div>
@@ -119,10 +135,11 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                                             type='file'
                                             id='customFile'
                                             className='form-control'
+                                            onChange={handleFileChange}
                                         />
                                     </label>
                                 </div>
-                                <img src='' alt='' className='img-fluid'/>
+                                <img src={tempData.imageUrl} alt='' className='img-fluid'/>
                             </div>
                             <div className='col-sm-8'>
                                 <div className='form-group mb-2'>
