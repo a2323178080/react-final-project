@@ -7,6 +7,7 @@ import Example from "./views/example/example";
 import Login from "./views/login/login";
 import Admin from "./views/admin/admin";
 import AdminProducts from "./views/admin/admin-product/admin-products";
+import AdminOrders from "./views/admin/admin-orders/admin-orders";
 
 function App() {
     useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
             <Route path="/login" element={<Login/>}></Route>
             <Route path="/admin" element={<Admin/>}>
                 <Route path="adminProducts" element={<AdminProducts/>}></Route>
+                <Route path="adminOrders" element={<AdminOrders/>}></Route>
             </Route>
         </Routes>
 

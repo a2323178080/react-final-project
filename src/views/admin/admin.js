@@ -1,4 +1,4 @@
-import {Outlet, useNavigate} from 'react-router-dom'
+import {Outlet, useNavigate,NavLink } from 'react-router-dom'
 import axios from 'axios';
 import {useEffect} from 'react';
 import Message from "../../components/message";
@@ -69,27 +69,27 @@ export default function Admin() {
             <div className='d-flex' style={{minHeight: 'calc(100vh - 56px)'}}>
                 <div className='bg-light' style={{width: '200px'}}>
                     <ul className='list-group list-group-flush'>
-                        <a
+                        <NavLink
                             className='list-group-item list-group-item-action py-3'
-                            to='/admin/products'
+                            to='/admin/adminProducts'
                         >
                             <i className='bi bi-cup-fill me-2'/>
                             產品列表
-                        </a>
-                        <a
+                        </NavLink>
+                        <NavLink
                             className='list-group-item list-group-item-action py-3'
                             to='/admin/coupons'
                         >
                             <i className='bi bi-ticket-perforated-fill me-2'/>
                             優惠卷列表
-                        </a>
-                        <a
+                        </NavLink>
+                        <NavLink
                             className='list-group-item list-group-item-action py-3'
-                            to='/admin/orders'
+                            to='/admin/adminOrders'
                         >
                             <i className='bi bi-receipt me-2'/>
                             訂單列表
-                        </a>
+                        </NavLink>
                     </ul>
                 </div>
                 <div className='w-100'>
