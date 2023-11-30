@@ -24,7 +24,6 @@ export default function Login(){
             const { token ,expired} = res.data;
             axios.defaults.headers.common['Authorization'] = token;
             document.cookie=`hexToken=${token};expires=${new Date(expired)};`;
-            console.log(res)
             if(res.data.success){
                 navigate("/admin/adminProducts")
             }
@@ -33,9 +32,6 @@ export default function Login(){
             setLoginState(error.response.data);
             console.log(error)
         }
-
-
-
     }
 
     return(
@@ -45,7 +41,7 @@ export default function Login(){
                 <h2>登入帳號</h2>
                     <div
                         className={`alert alert-danger ${
-                            loginState.message ? 'd-block' : 'd-none'
+                            loginState.message==="登入失敗" ? 'd-block' : 'd-none'
                         }`}
                         role='alert'
                     >
@@ -66,7 +62,6 @@ export default function Login(){
                 <button type="button" className="btn btn-primary" onClick={submit}>登入</button>
             </div>
         </div>
-
     </div>
     )
 }

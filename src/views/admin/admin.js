@@ -7,7 +7,6 @@ export default function Admin() {
     const navigate = useNavigate();
     const logout = () => {
         document.cookie = 'hexToken=;';
-
         navigate('/login');
     };
     // 取出 Token
@@ -35,11 +34,10 @@ export default function Admin() {
 
     return (
         <div>
-
             <Message/>
             <nav className='navbar navbar-expand-lg bg-dark'>
                 <div className='container-fluid'>
-                    <p className='text-white mb-0'>HEX EATS 後台管理系統</p>
+                    <p className='text-white mb-0'>後台管理系統</p>
                     <button
                         className='navbar-toggler'
                         type='button'
