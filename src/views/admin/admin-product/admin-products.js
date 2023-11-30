@@ -126,7 +126,7 @@ export default function AdminProducts() {
         </table>
 
         <div className="mt-5">
-        <Pagination current={current} onChange={switchPage} total={parseInt(pagination.total_pages, 10) * 10}/>
+        <Pagination current={current} onChange={switchPage} total={parseInt(pagination.total_pages, 10) * 10||0}/>
         </div>
     </div>)
 }
