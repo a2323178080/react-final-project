@@ -69,17 +69,16 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             );
             getProducts()
             closeProductModal()
-            message.success("可以")
+            type==="create"?message.success("建立成功"):message.success("編輯成功")
         } catch (error) {
-            console.log(error);
-            message.error("不可以")
+            console.log(error.response.data.message);
+            message.error(error.response.data.message.join("、"))
         }
     }
 
-
     return (
         <div
-            className='modal fade'
+            className='modal fade mt-5'
             tabIndex='-1'
             id='productModal'
             aria-labelledby='exampleModalLabel'

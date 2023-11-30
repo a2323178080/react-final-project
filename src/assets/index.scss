@@ -88,6 +88,9 @@ button {
   height:100%;
 }
 
+.ant-message {
+  z-index: 9999;
+}
 
 @import "bootstrap/scss/functions";
 

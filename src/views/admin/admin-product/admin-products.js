@@ -3,7 +3,7 @@ import axios from "axios";
 import ProductModal from "../../../components/product-modal";
 import DeleteModal from "../../../components/delete-modal";
 import {Modal} from "bootstrap";
-import {Pagination} from 'antd';
+import {Pagination,message} from 'antd';
 
 export default function AdminProducts() {
     const [products, setProducts] = useState([]);
@@ -52,6 +52,7 @@ export default function AdminProducts() {
             if (res.data.success) {
                 getProducts();
                 deleteModal.current.hide();
+                message.success("刪除成功")
             }
         } catch (error) {
             console.log(error);
