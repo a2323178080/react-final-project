@@ -6,7 +6,7 @@ import Home from "./views/home/index";
 import Example from "./views/example/example";
 import Login from "./views/login/login";
 import Admin from "./views/admin/admin";
-import AdminProducts from "./views/admin/admin-product/admin-products";
+import AdminProducts from "./views/admin/admin-products/admin-products";
 import AdminOrders from "./views/admin/admin-orders/admin-orders";
 
 function App() {
