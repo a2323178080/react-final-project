@@ -78,7 +78,7 @@ export default function Admin() {
                         </NavLink>
                         <NavLink
                             className='list-group-item list-group-item-action py-3'
-                            to='/admin/coupons'
+                            to='/admin/adminCoupons'
                         >
                             <i className='bi bi-ticket-perforated-fill me-2'/>
                             優惠卷列表

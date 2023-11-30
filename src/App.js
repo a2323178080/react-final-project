@@ -8,6 +8,7 @@ import Login from "./views/login/login";
 import Admin from "./views/admin/admin";
 import AdminProducts from "./views/admin/admin-products/admin-products";
 import AdminOrders from "./views/admin/admin-orders/admin-orders";
+import AdminCoupons from "./views/admin/admin-coupons/admin-coupons";
 
 function App() {
     useEffect(() => {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/admin" element={<Admin/>}>
                 <Route path="adminProducts" element={<AdminProducts/>}></Route>
                 <Route path="adminOrders" element={<AdminOrders/>}></Route>
+                <Route path="adminCoupons" element={<AdminCoupons/>}></Route>
             </Route>
         </Routes>
 
