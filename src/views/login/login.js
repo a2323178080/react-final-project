@@ -2,7 +2,7 @@ import "./login.scss";
 import axios from "axios";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
-
+import { message} from 'antd';
 
 export default function Login(){
     const [loginState, setLoginState] = useState({});
@@ -30,7 +30,7 @@ export default function Login(){
         }
         catch (error){
             setLoginState(error.response.data);
-            console.log(error)
+            message.error('登入失敗');
         }
     }
 
