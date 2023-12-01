@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {Pagination} from 'antd';
+import { Link } from "react-router-dom";
 import "./products.scss"
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,6 @@ export default function Products() {
     const productRes = await axios.get(
       `/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`,
     );
-    console.log(productRes);
     setProducts(productRes.data.products);
     setPagination(productRes.data.pagination);
   };
@@ -41,7 +41,7 @@ export default function Products() {
                   />
                   <div className="card-body p-0">
                     <h4 className="mb-0 mt-2">
-                      <a href="#">{product.title}</a>
+                      <Link to={`/product/${product.id}`}>{product.title}</Link>
                     </h4>
                       <p className="text-muted mb-0">{product.content}</p>
                     <p className="text-muted mt-1">NT$ {product.price}</p>
