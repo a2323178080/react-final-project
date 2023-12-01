@@ -1,3 +1,4 @@
+import {useNavigate} from "react-router-dom";
 import img1 from "../../../assets/img1.jpg";
 import img2 from "../../../assets/img2.jpg";
 import img3 from "../../../assets/img3.jpg";
@@ -9,6 +10,7 @@ import img8 from "../../../assets/img8.jpg";
 
 
 export default function Home() {
+  const navigate=useNavigate()
   return (
     <div>
       <div className="container mt-3">
@@ -28,6 +30,7 @@ export default function Home() {
                   className="btn btn-dark rounded-0"
                   type="button"
                   id="search"
+                  onClick={()=>{navigate('/products')}}
                 >
                   了解更多
                 </button>
@@ -46,7 +49,7 @@ export default function Home() {
                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                     diam nonumy eirmod.
                   </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
+                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
                     選購去
                   </button>
                 </div>
@@ -63,7 +66,7 @@ export default function Home() {
                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                     diam nonumy eirmod.
                   </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
+                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
                     選購去
                   </button>
                 </div>
@@ -80,7 +83,7 @@ export default function Home() {
                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                     diam nonumy eirmod.
                   </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
+                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
                     選購去
                   </button>
                 </div>
@@ -97,7 +100,7 @@ export default function Home() {
                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                     diam nonumy eirmod.
                   </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap">
+                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
                     選購去
                   </button>
                 </div>
@@ -193,7 +196,7 @@ export default function Home() {
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                 diam nonumy eirmod.
               </p>
-              <button className="btn btn-dark mt-4 rounded-0">
+              <button className="btn btn-dark mt-4 rounded-0" onClick={()=>{navigate('/products')}}>
                 了解更多
               </button>
             </div>
