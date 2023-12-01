@@ -17,7 +17,7 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
           <NavLink
-            className="navbar-brand position-absolute"
+            className="navbar-brand position-absolute fs-4 fw-bold"
             to="/"
             style={{
               left: "50%",
@@ -38,7 +38,7 @@ export default function Navbar() {
           >
             <ul className="navbar-nav">
               <li className="nav-item active">
-                <NavLink className="nav-link ps-0" to="/products" >
+                <NavLink className="nav-link ps-0 fs-4 fw-bold" to="/products" >
                   產品列表
                 </NavLink>
               </li>
