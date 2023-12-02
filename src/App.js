@@ -11,6 +11,7 @@ import FrontLayout from "./views/front-layout/front-layout";
 import Home from "./views/front-layout/home/home";
 import Products from "./views/front-layout/products/products";
 import ProductDetail from "./views/front-layout/product-detail/product-detail";
+import Cart from "./views/front-layout/cart/cart";
 
 function App() {
     useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
                 <Route path='' element={<Home/>}></Route>
                 <Route path='products' element={<Products/>}></Route>
                 <Route path='product/:id' element={<ProductDetail />}></Route>
+                <Route path='cart' element={<Cart/>}></Route>
             </Route>
             <Route path="/login" element={<Login/>}></Route>
             <Route path="/admin" element={<Admin/>}>
