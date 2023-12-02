@@ -12,6 +12,7 @@ import Home from "./views/front-layout/home/home";
 import Products from "./views/front-layout/products/products";
 import ProductDetail from "./views/front-layout/product-detail/product-detail";
 import Cart from "./views/front-layout/cart/cart";
+import Checkout from "./views/front-layout/checkout/checkout";
 
 function App() {
     useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
                 <Route path='products' element={<Products/>}></Route>
                 <Route path='product/:id' element={<ProductDetail />}></Route>
                 <Route path='cart' element={<Cart/>}></Route>
+                <Route path='checkout' element={<Checkout/>}></Route>
             </Route>
             <Route path="/login" element={<Login/>}></Route>
             <Route path="/admin" element={<Admin/>}>
