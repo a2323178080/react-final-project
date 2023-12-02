@@ -35,10 +35,10 @@ export default function Login(){
     }
 
     return(
-    <div className="login container py-5">
+    <div className="login container py-5 mt-5">
         <div className="row justify-content-center">
             <div className="col-md-6">
-                <h2>登入帳號</h2>
+                <h2>後台管理系統</h2>
                     <div
                         className={`alert alert-danger ${
                             loginState.message==="登入失敗" ? 'd-block' : 'd-none'
