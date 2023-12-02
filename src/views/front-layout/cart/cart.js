@@ -1,20 +1,21 @@
 import axios from "axios";
 import { useState } from "react";
-import {NavLink, useOutletContext} from "react-router-dom";
-import {message} from "antd";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import { message } from "antd";
 
 export default function Cart() {
   const { cartData, getCart } = useOutletContext();
-  const [loadingItems, setLoadingItem] = useState([])
+  const [loadingItems, setLoadingItem] = useState([]);
+  const navigate = useNavigate();
   const removeCartItem = async (id) => {
     try {
       const res = await axios.delete(
         `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,
       );
-      message.success("刪除成功")
+      message.success("刪除成功");
       getCart();
     } catch (error) {
-      message.error("刪除失敗")
+      message.error("刪除失敗");
     }
   };
   const updateCartItem = async (item, quantity) => {
@@ -24,21 +25,29 @@ export default function Cart() {
         qty: quantity,
       },
     };
-    setLoadingItem([...loadingItems, item.id])
+    setLoadingItem([...loadingItems, item.id]);
     try {
       const res = await axios.put(
-          `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
-          data,
+        `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
+        data,
       );
-      message.success("編輯成功")
+      message.success("編輯成功");
       setLoadingItem(
-          loadingItems.filter((loadingObject) => loadingObject !== item.id),
+        loadingItems.filter((loadingObject) => loadingObject !== item.id),
       );
       getCart();
     } catch (error) {
-      message.error("編輯失敗")
+      message.error("編輯失敗");
     }
   };
+  const toNext=()=>{
+    if(cartData.carts.length>0){
+      navigate("/checkout")
+    }
+    else{
+      navigate("/products")
+    }
+  }
   return (
     <div className="container">
       <div className="row justify-content-center">
@@ -78,20 +87,20 @@ export default function Cart() {
                   <div className="d-flex justify-content-between align-items-center w-100">
                     <div className="input-group w-50 align-items-center">
                       <select
-                          name=''
-                          className='form-select'
-                          id=''
-                          value={item.qty}
-                          disabled={loadingItems.includes(item.id)}
-                          onChange={(e) => {
-                            updateCartItem(item, e.target.value * 1);
-                          }}
+                        name=""
+                        className="form-select"
+                        id=""
+                        value={item.qty}
+                        disabled={loadingItems.includes(item.id)}
+                        onChange={(e) => {
+                          updateCartItem(item, e.target.value * 1);
+                        }}
                       >
                         {[...new Array(20)].map((i, num) => {
                           return (
-                              <option value={num + 1} key={num}>
-                                {num + 1}
-                              </option>
+                            <option value={num + 1} key={num}>
+                              {num + 1}
+                            </option>
                           );
                         })}
                       </select>
@@ -106,12 +115,12 @@ export default function Cart() {
             <p className="mb-0 h4 fw-bold">總金額</p>
             <p className="mb-0 h4 fw-bold">NT${cartData.final_total}</p>
           </div>
-          <NavLink
-            to="/checkout"
+          <button
+            onClick={toNext}
             className="btn btn-dark w-100 mt-4 rounded-0 py-3"
           >
             確認餐點正確
-          </NavLink>
+          </button>
         </div>
       </div>
     </div>
