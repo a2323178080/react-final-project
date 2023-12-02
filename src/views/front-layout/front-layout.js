@@ -26,7 +26,7 @@ export default function FrontLayout() {
   }, [])
   return (
     <div>
-      <Navbar cartData={cartData} />
+      <Navbar cartData={cartData} cartIcon/>
       <Outlet context={{ getCart ,cartData}}></Outlet>
       <div className="bg-dark">
         <div className="container">

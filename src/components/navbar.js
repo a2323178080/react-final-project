@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { ShoppingCartOutlined,UserOutlined  } from "@ant-design/icons";
-export default function Navbar({cartData}) {
+export default function Navbar({cartData,cartIcon}) {
   return (
     <div className="bg-white sticky-top">
       <div className="container">
@@ -31,12 +31,12 @@ export default function Navbar({cartData}) {
             <NavLink to="/login" className="nav-link">
               <UserOutlined style={{ fontSize: "25px" }} />
             </NavLink>
-            <NavLink to="/cart" className="nav-link position-relative">
+            {cartIcon&& <NavLink to="/cart" className="nav-link position-relative">
               <ShoppingCartOutlined style={{ fontSize: "25px" }} />
               <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                 {cartData?.carts?.length}
               </span>
-            </NavLink>
+            </NavLink>}
           </div>
           <div
             className="collapse navbar-collapse bg-white custom-header-md-open"
