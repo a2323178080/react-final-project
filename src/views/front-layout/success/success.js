@@ -1,6 +1,7 @@
 import { Link, useParams, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import banner from "../../../assets/picture/success/banner.jpg";
 export default function Success() {
   const { orderId } = useParams();
   const [orderData, setOrderData] = useState({});
@@ -22,9 +23,9 @@ export default function Success() {
       <div
         style={{
           minHeight: "400px",
-          backgroundImage:
-            "url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)",
+          backgroundImage: `url(${banner})`,
           backgroundPosition: "center center",
+          backgroundSize: "cover",
         }}
       ></div>
       <div className="mt-5 mb-7">
