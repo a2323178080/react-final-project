@@ -25,7 +25,7 @@ export default function Navbar({cartData,cartIcon}) {
               top: "50%",
             }}
           >
-            美食首頁
+            飲品首頁
           </NavLink>
           <div className="d-flex order-md-last gap-3">
             <NavLink to="/login" className="nav-link">
