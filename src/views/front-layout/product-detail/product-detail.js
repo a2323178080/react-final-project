@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams,useOutletContext } from "react-router-dom";
-import banner from "../../../assets/banner.jpg";
+import banner from "../../../assets/picture/product-detail/banner.jpg";
 import {message} from 'antd';
 export default function ProductDetail() {
   const [product, setProduct] = useState({});
@@ -108,18 +108,18 @@ export default function ProductDetail() {
           </button>
           <h4 className="text-strong fw-bold fs-5 mt-5">產品介紹</h4>
           <ul className="lh-lg">
-            <li>專注於做好每一道料理</li>
-            <li>堅持純手工</li>
-            <li>慢火細熬</li>
-            <li>心創造每一道具有靈魂的料理</li>
+            <li>餘韻悠長</li>
+            <li>豐富層次</li>
+            <li>獨特口感</li>
+            <li>用心創造每一杯具有靈魂的飲品</li>
             <li>期許感動每一個不平凡的味蕾</li>
           </ul>
           <hr className="mt-4" />
           <h4 className="text-strong fw-bold fs-5 mt-4">購物須知</h4>
-          <p className="lh-lg">商品可指定送達時間，下訂後一律採黑貓寄送。</p>
+          <p className="lh-lg">商品可以於指定送達時間與地點</p>
           <hr className="mt-4" />
           <h4 className="text-strong fw-bold fs-5 mt-4">退換貨須知</h4>
-          <p className="lh-lg">本產品不適用7天鑑賞期，。</p>
+          <p className="lh-lg">倘若產品在運送過程中受損或漏液，請盡速聯繫我們，將予以退款或是幫您重新寄出</p>
         </div>
       </div>
     </div>
