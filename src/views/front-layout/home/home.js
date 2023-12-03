@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import img1 from "../../../assets/img1.jpg";
 import img2 from "../../../assets/img2.jpg";
 import img3 from "../../../assets/img3.jpg";
@@ -8,9 +8,14 @@ import img6 from "../../../assets/img6.jpg";
 import img7 from "../../../assets/img7.jpg";
 import img8 from "../../../assets/img8.jpg";
 
-
 export default function Home() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const exhibition = [
+    { picture: img1, title: "title1", content: "description1" },
+    { picture: img2, title: "title2", content: "description2" },
+    { picture: img3, title: "title3", content: "description3" },
+    { picture: img4, title: "title4", content: "description4" },
+  ];
   return (
     <div>
       <div className="container mt-3">
@@ -30,7 +35,9 @@ export default function Home() {
                   className="btn btn-dark rounded-0"
                   type="button"
                   id="search"
-                  onClick={()=>{navigate('/products')}}
+                  onClick={() => {
+                    navigate("/products");
+                  }}
                 >
                   了解更多
                 </button>
@@ -39,74 +46,35 @@ export default function Home() {
           </div>
         </div>
         <div className="row mt-5">
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative ">
-              <img src={img2} className="card-img-top rounded-2" alt="..." />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
-                    選購去
-                  </button>
+          {exhibition.map((item) => {
+            return (
+              <div className="col-md-6 mt-md-4">
+                <div className="card border-0 mb-4 position-relative ">
+                  <img
+                    src={item.picture}
+                    className="card-img-top rounded-2"
+                    alt="..."
+                  />
+                  <div className="card-body p-0">
+                    <h4 className="mb-0 mt-4">{item.title}</h4>
+                    <div className="d-flex justify-content-between mt-3">
+                      <p className="card-text text-muted mb-0 w-75">
+                        {item.content}
+                      </p>
+                      <button
+                        className="btn btn-outline-dark rounded-0 text-nowrap"
+                        onClick={() => {
+                          navigate("/products");
+                        }}
+                      >
+                        選購去
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative">
-              <img src={img3} alt="..." className="card-img-top" />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
-                    選購去
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src={img4} className="card-img-top rounded-0" alt="..." />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
-                    選購去
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-6 mt-md-4">
-            <div className="card border-0 mb-4 position-relative position-relative">
-              <img src={img5} className="card-img-top rounded-2" alt="..." />
-              <div className="card-body p-0">
-                <h4 className="mb-0 mt-4">Lorem ipsum</h4>
-                <div className="d-flex justify-content-between mt-3">
-                  <p className="card-text text-muted mb-0 w-75">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod.
-                  </p>
-                  <button className="btn btn-outline-dark rounded-0 text-nowrap" onClick={()=>{navigate('/products')}}>
-                    選購去
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
       <div className="bg-light mt-7">
@@ -175,7 +143,7 @@ export default function Home() {
           </div>
           <div className="col-md-4">
             <img
-                src={img8}
+              src={img8}
               alt=""
               style={{ width: "160px", height: "160px", objectFit: "cover" }}
             />
@@ -196,7 +164,12 @@ export default function Home() {
                 Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
                 diam nonumy eirmod.
               </p>
-              <button className="btn btn-dark mt-4 rounded-0" onClick={()=>{navigate('/products')}}>
+              <button
+                className="btn btn-dark mt-4 rounded-0"
+                onClick={() => {
+                  navigate("/products");
+                }}
+              >
                 了解更多
               </button>
             </div>
