@@ -2,6 +2,7 @@
   "name": "react-cra",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://a2323178080.github.io/react-final-project",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@popperjs/core": "^2.11.8",
@@ -12,6 +13,7 @@
     "axios": "^1.5.0",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.11.2",
+    "gh-pages": "^6.1.0",
     "prettier": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -24,7 +26,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+
   },
   "eslintConfig": {
     "extends": [
