@@ -2,7 +2,6 @@
   "name": "react-cra",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://react-final-project-gilt.vercel.app/",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@popperjs/core": "^2.11.8",
