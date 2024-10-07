@@ -2,7 +2,6 @@
   "name": "react-cra",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://a2323178080.github.io/react-final-project",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@popperjs/core": "^2.11.8",
