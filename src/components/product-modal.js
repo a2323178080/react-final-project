@@ -2,7 +2,7 @@ import axios from "axios";
 import {useState, useEffect} from "react";
 import {message} from 'antd';
 
-export default function ProductModal({closeProductModal, getProducts, type, tempProduct}) {
+export default function ProductModal({closeProductModal, getProducts, type, tempProduct, pageIndex}) {
     const [tempData, setTempData] = useState({
         title: '',
         category: '',
@@ -54,10 +54,12 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
 
     const submit = async () => {
         try {
-            let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`;
+            // 新增後台商品
+            let api = '/admin/product';
             let method = 'post';
             if (type === 'edit') {
-                api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${tempProduct.id}`;
+                // 編輯後台產品
+                api = `/admin/product/${tempProduct.id}`;
                 method = 'put';
             }
             const res = await axios[method](
@@ -66,12 +68,12 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                     data: tempData,
                 },
             );
-            getProducts()
+            getProducts(pageIndex)
             closeProductModal()
             type==="create"?message.success("建立成功"):message.success("編輯成功")
         } catch (error) {
-            console.log(error.response.data.message);
-            message.error(error.response.data.message.join("、"))
+            console.log(error.response);
+            message.error(error.response?.data.message.join("、"))
         }
     }
     const handleFileChange = (e) => {

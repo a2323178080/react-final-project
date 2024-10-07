@@ -9,7 +9,8 @@ export default function Success() {
 
   const getOrder = async (orderId) => {
     const res = await axios.get(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/order/${orderId}`,
+       // 取得單一筆訂單
+       `/order/${orderId}`,
     );
     setOrderData(res.data.order);
     getCart();

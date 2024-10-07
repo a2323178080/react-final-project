@@ -55,10 +55,12 @@ export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }
 
     const submit = async () => {
         try {
-            let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon`;
+            // 新增優惠券
+            let api = `/admin/coupon`
             let method = 'post';
             if (type === 'edit') {
-                api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon/${tempCoupon.id}`;
+                // 編輯優惠券
+                api = `/admin/coupon/${tempCoupon.id}`;
                 method = 'put';
             }
             const res = await axios[method](
@@ -75,7 +77,7 @@ export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }
             type==="create"?message.success("建立成功"):message.success("編輯成功")
         } catch (error) {
             console.log(error);
-            message.error(error.response.data.message.join("、"))
+            message.error(error.response?.data.message.join("、"))
         }
     };
     return(

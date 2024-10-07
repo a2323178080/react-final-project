@@ -11,7 +11,8 @@ export default function ProductDetail() {
   const { getCart } = useOutletContext();
   const getProduct = async (id) => {
     const productRes = await axios.get(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/product/${id}`,
+      //  取得單一筆產品
+        `/product/${id}`,
     );
     setProduct(productRes.data.product);
   };
@@ -25,7 +26,8 @@ export default function ProductDetail() {
     setIsLoading(true);
     try {
       const res = await axios.post(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart`,
+        // 新增購物車
+       `/cart`,
         data,
       );
       message.success("加入成功")

@@ -16,15 +16,15 @@ import Checkout from "./views/front-layout/checkout/checkout";
 import Success from "./views/front-layout/success/success";
 
 function App() {
-    useEffect(() => {
-        (async () => {
-            try {
-                const result = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`)
-            } catch (error) {
-                console.log("錯誤")
-            }
-        })()
-    }, [])
+    // useEffect(() => {
+    //     (async () => {
+    //         try {
+    //             const result = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/products/all`)
+    //         } catch (error) {
+    //             console.log("錯誤")
+    //         }
+    //     })()
+    // }, [])
 
     return (<div className="App">
         <Routes>

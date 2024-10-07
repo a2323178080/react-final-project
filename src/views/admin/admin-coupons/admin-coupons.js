@@ -26,7 +26,8 @@ export default function AdminCoupons(){
     }, []);
     const getCoupons = async (page = 1) => {
         const res = await axios.get(
-            `/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupons?page=${page}`,
+            // 取得優惠券
+            `/admin/coupons?page=${page}&pageSize=5`
         );
         setCoupons(res.data.coupons);
         setPagination(res.data.pagination);
@@ -50,7 +51,10 @@ export default function AdminCoupons(){
     };
     const deleteCoupon = async (id) => {
         try {
-            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/coupon/${id}`);
+            const res = await axios.delete(
+                // 刪除優惠券
+                `/admin/coupon/${id}`
+            );
             if (res.data.success) {
                 getCoupons();
                 deleteModal.current.hide();

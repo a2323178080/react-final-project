@@ -16,7 +16,8 @@ export default function AdminOrders(){
     }, []);
     const getOrders = async (page = 1) => {
         const res = await axios.get(
-            `/v2/api/${process.env.REACT_APP_API_PATH}/admin/orders?page=${page}`,
+            // 取得訂單
+            `/admin/orders?page=${page}&pageSize=5`
         );
         setOrders(res.data.orders);
         setPagination(res.data.pagination);

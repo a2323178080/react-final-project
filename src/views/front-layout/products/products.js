@@ -10,7 +10,8 @@ export default function Products() {
 
   const getProducts = async (page = 1) => {
     const productRes = await axios.get(
-      `/v2/api/${process.env.REACT_APP_API_PATH}/products?page=${page}`,
+       // 取得商品
+      `/products?page=${page}&pageSize=5`
     );
     setProducts(productRes.data.products);
     setPagination(productRes.data.pagination);
@@ -30,10 +31,10 @@ export default function Products() {
         <div className="row">
           {products.map((product) => {
             return (
-              <div className="col-md-3" key={product.id}>
+              <div className="col-md-3" key={product?.id}>
                 <div className="card border-0 mb-4 position-relative position-relative">
                   <img
-                    src={product.imageUrl}
+                    src={product?.imageUrl}
                     className="card-img-top rounded-2"
                     alt="..."
                     height={300}
@@ -41,10 +42,10 @@ export default function Products() {
                   />
                   <div className="card-body p-0">
                     <h4 className="mb-0 mt-2">
-                      <Link to={`/product/${product.id}`}>{product.title}</Link>
+                      <Link to={`/product/${product?.id}`}>{product?.title}</Link>
                     </h4>
-                      <p className="text-muted mb-0">{product.content}</p>
-                    <p className="text-muted mt-1">NT$ {product.price}</p>
+                      <p className="text-muted mb-0">{product?.content}</p>
+                    <p className="text-muted mt-1">NT$ {product?.price}</p>
                   </div>
                 </div>
               </div>

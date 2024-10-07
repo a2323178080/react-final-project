@@ -14,7 +14,8 @@ export default function Checkout() {
     };
     try {
       const res = await axios.post(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/order`,
+          // 新增訂單
+          '/order',
         data,
       );
       navigate(`/success/${res.data.orderId}`)

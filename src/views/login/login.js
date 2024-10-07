@@ -21,15 +21,19 @@ export default function Login() {
 
   const submit = async (e) => {
     try {
-      const res = await axios.post("/v2/admin/signin", data);
-      const { token, expired } = res.data;
-      axios.defaults.headers.common["Authorization"] = token;
+      const res = await axios.post(
+          // 登入
+          "/signin"
+          , data);
+
+      const { token, expired } = res?.data;
+      // axios.defaults.headers.common["Authorization"] = token;
       document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-      if (res.data.success) {
+      if (res?.data?.success) {
         navigate("/admin/adminProducts");
       }
     } catch (error) {
-      setLoginState(error.response.data);
+      setLoginState(error.response?.data);
       message.error("登入失敗");
     }
   };
@@ -43,11 +47,11 @@ export default function Login() {
             <h2>後台管理系統</h2>
             <div
               className={`alert alert-danger ${
-                loginState.message === "登入失敗" ? "d-block" : "d-none"
+                loginState?.message === "登入失敗" ? "d-block" : "d-none"
               }`}
               role="alert"
             >
-              {loginState.message}
+              {loginState?.message}
             </div>
             <div className="mb-2">
               <label htmlFor="email" className="form-label w-100">

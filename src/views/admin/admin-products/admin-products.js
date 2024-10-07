@@ -14,6 +14,7 @@ export default function AdminProducts() {
     // type: 決定 modal 展開的用途
     const [type, setType] = useState('create'); // edit
     const [tempProduct, setTempProduct] = useState({});
+    const [pageIndex, setPageIndex] = useState(1);
 
     useEffect(() => {
         productModal.current = new Modal('#productModal', {
@@ -27,9 +28,12 @@ export default function AdminProducts() {
     }, []);
 
     const getProducts = async (page = 1) => {
-        const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products?page=${page}`,);
-        setProducts(productRes.data.products);
-        setPagination(productRes.data.pagination);
+        const productRes = await axios.get(
+            // 取得後台產品
+            `/admin/products?page=${page}&pageSize=5`
+        );
+        setProducts(productRes?.data?.products);
+        setPagination(productRes?.data?.pagination);
     };
     const openProductModal = (type, product) => {
         setType(type);
@@ -48,9 +52,16 @@ export default function AdminProducts() {
     };
     const deleteProduct = async (id) => {
         try {
-            const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${id}`);
-            if (res.data.success) {
-                getProducts();
+            const res = await axios.delete(
+                // 刪除後台產品
+                `/admin/product/${id}`
+            );
+            if (res?.data?.success) {
+                await getProducts(pageIndex);
+                if (products.length === 1 && pageIndex > 1) {
+                    setPageIndex(pageIndex - 1);
+                    getProducts(pageIndex - 1);
+                }
                 deleteModal.current.hide();
                 message.success("刪除成功")
             }
@@ -61,6 +72,7 @@ export default function AdminProducts() {
 
     const [current, setCurrent] = useState(1);
     const switchPage = (page) => {
+        setPageIndex(page)
         getProducts(page)
         setCurrent(page);
     };
@@ -76,7 +88,8 @@ export default function AdminProducts() {
         <ProductModal closeProductModal={closeProductModal}
                       getProducts={getProducts}
                       tempProduct={tempProduct}
-                      type={type}/>
+                      type={type}
+                      pageIndex={pageIndex}/>
         <hr/>
         <div className='text-end'>
             <button

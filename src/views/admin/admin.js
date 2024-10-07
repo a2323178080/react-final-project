@@ -16,20 +16,20 @@ export default function Admin() {
 
     axios.defaults.headers.common['Authorization'] = token;
 
-    useEffect(() => {
-        if (!token) {
-            return navigate('/login');
-        }
-        (async () => {
-            try {
-                await axios.post('/v2/api/user/check');
-            } catch (error) {
-                if (!error.response.data.success) {
-                    navigate('/login');
-                }
-            }
-        })();
-    }, [navigate, token]);
+    // useEffect(() => {
+    //     if (!token) {
+    //         return navigate('/login');
+    //     }
+    //     (async () => {
+    //         try {
+    //             await axios.post('/v2/api/user/check');
+    //         } catch (error) {
+    //             if (!error.response.data.success) {
+    //                 navigate('/login');
+    //             }
+    //         }
+    //     })();
+    // }, [navigate, token]);
 
     return (
         <div>

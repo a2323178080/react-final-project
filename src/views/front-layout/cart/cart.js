@@ -10,7 +10,8 @@ export default function Cart() {
   const removeCartItem = async (id) => {
     try {
       const res = await axios.delete(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${id}`,
+          // 刪除購物車
+          `/cart/${id}`
       );
       message.success("刪除成功");
       getCart();
@@ -28,7 +29,8 @@ export default function Cart() {
     setLoadingItem([...loadingItems, item.id]);
     try {
       const res = await axios.put(
-        `/v2/api/${process.env.REACT_APP_API_PATH}/cart/${item.id}`,
+          // 編輯購物車
+         `/cart/${item.id}`,
         data,
       );
       message.success("編輯成功");
