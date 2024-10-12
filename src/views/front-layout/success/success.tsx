@@ -2,12 +2,33 @@ import { Link, useParams, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import banner from "../../../assets/picture/success/banner.jpg";
-export default function Success() {
-  const { orderId } = useParams();
-  const [orderData, setOrderData] = useState({});
-  const { getCart } = useOutletContext();
 
-  const getOrder = async (orderId) => {
+interface Product {
+  id: string;
+  product: {
+    imageUrl: string;
+    title: string;
+    price: number;
+  };
+  qty: number;
+  final_total: number;
+}
+
+interface OrderData {
+  total: number;
+  products: Product[];
+}
+
+interface OutletContext {
+  getCart: () => void;
+}
+
+export default function Success() {
+  const { orderId } = useParams<{ orderId: string }>();
+  const [orderData, setOrderData] = useState<OrderData | null>(null);
+  const { getCart } = useOutletContext<OutletContext>();
+
+  const getOrder = async (orderId: string) => {
     const res = await axios.get(
        // 取得單一筆訂單
        `/order/${orderId}`,
@@ -17,7 +38,7 @@ export default function Success() {
   };
 
   useEffect(() => {
-    getOrder(orderId);
+    getOrder(orderId as string);
   }, [orderId]);
   return (
     <div className="container ">
@@ -79,7 +100,7 @@ export default function Success() {
                   <li className="list-group-item px-0 pb-0">
                     <div className="d-flex justify-content-between mt-2">
                       <p className="mb-0 h4 fw-bold">總計</p>
-                      <p className="mb-0 h4 fw-bold">NT${orderData.total}</p>
+                      <p className="mb-0 h4 fw-bold">NT${orderData?.total}</p>
                     </div>
                   </li>
                 </ul>

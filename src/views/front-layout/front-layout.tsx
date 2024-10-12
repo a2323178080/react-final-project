@@ -36,17 +36,17 @@ export default function FrontLayout() {
             <ul className="d-flex list-unstyled mb-0 h4">
               <li>
                 <a href="#" className="text-white mx-3">
-                  <FacebookOutlined />
+                  <FacebookOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
                 </a>
               </li>
               <li>
                 <a href="#" className="text-white mx-3">
-                  <InstagramOutlined />
+                  <InstagramOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
                 </a>
               </li>
               <li>
                 <a href="#" className="text-white ms-3">
-                  <WechatOutlined />
+                  <WechatOutlined onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}/>
                 </a>
               </li>
             </ul>

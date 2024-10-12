@@ -1,15 +1,29 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams,useOutletContext } from "react-router-dom";
+// @ts-ignore
 import banner from "../../../assets/picture/product-detail/banner.jpg";
 import {message} from 'antd';
+
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  content: string;
+  imageUrl: string;
+}
+
+
+interface OutletContext {
+  getCart: () => void;
+}
 export default function ProductDetail() {
-  const [product, setProduct] = useState({});
-  const { id } = useParams();
-  const [cartQuantity, setCartQuantity] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const { getCart } = useOutletContext();
-  const getProduct = async (id) => {
+  const [product, setProduct] = useState<Product | null>(null);
+  const { id } = useParams<{ id: string  }>();
+  const [cartQuantity, setCartQuantity] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { getCart } = useOutletContext<OutletContext>();
+  const getProduct = async (id: string) => {
     const productRes = await axios.get(
       //  取得單一筆產品
         `/product/${id}`,
@@ -19,7 +33,7 @@ export default function ProductDetail() {
   const addToCart = async () => {
     const data = {
       data: {
-        product_id: product.id,
+        product_id: product?.id,
         qty: cartQuantity,
       },
     };
@@ -40,7 +54,9 @@ export default function ProductDetail() {
   };
 
   useEffect(() => {
-    getProduct(id);
+    if (id) {
+      getProduct(id);
+    }
   }, [id]);
   return (
     <div className="container">
@@ -54,12 +70,12 @@ export default function ProductDetail() {
       ></div>
       <div className="row  mt-4 mb-7">
         <div className="col-md-7">
-          <h2 className="mb-0 fw-bold">{product.title}</h2>
-          <p className="fw-bold">NT$ {product.price}</p>
-          <p>{product.content}</p>
+          <h2 className="mb-0 fw-bold">{product?.title}</h2>
+          <p className="fw-bold">NT$ {product?.price}</p>
+          <p>{product?.content}</p>
           <div className="my-4 rounded-2">
             <img
-              src={product.imageUrl}
+              src={product?.imageUrl}
               alt=""
               className="img-fluid mt-4"
               width={600}

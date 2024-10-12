@@ -1,22 +1,53 @@
 import axios from "axios";
 import {useEffect, useState } from "react";
 import {message} from 'antd';
-export default function OrderModal({ closeProductModal, getOrders, tempOrder}){
-    const [isLoading, setIsLoading] = useState(false);
-    const [tempData, setTempData] = useState({
+
+interface TempOrder {
+    id: number;
+    is_paid: string;
+    status: number;
+    user: {
+        email: string;
+        name: string;
+        address?: string;
+    };
+    products?: {
+        id: number;
+        product: {
+            title: string;
+        };
+        qty: number;
+    }[];
+    message: string;
+    total: number;
+}
+
+interface OrderModalProps {
+    closeProductModal: () => void;
+    getOrders: () => void;
+    tempOrder: TempOrder ;
+}
+
+export default function OrderModal({ closeProductModal, getOrders, tempOrder}: OrderModalProps){
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [tempData, setTempData] = useState<TempOrder>({
+        id: tempOrder?.id,
+        user: tempOrder?.user,
+        message: tempOrder?.message,
+        total: tempOrder?.total,
         is_paid: '',
         status: 0,
-        ...tempOrder,
+        products: tempOrder?.products,
     });
     useEffect(() => {
         setTempData({
             ...tempOrder,
-            is_paid: tempOrder.is_paid,
-            status: tempOrder.status,
+            is_paid: tempOrder?.is_paid,
+            status: tempOrder?.status,
         });
     }, [tempOrder]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         const { name, value, checked } = e.target;
         if (['is_paid'].includes(name)) {
             setTempData((preState) => ({ ...preState, [name]: checked }));
@@ -28,7 +59,7 @@ export default function OrderModal({ closeProductModal, getOrders, tempOrder}){
     const submit = async () => {
         setIsLoading(true);
         try {
-            let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${tempOrder.id}`;
+            let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/order/${tempOrder?.id}`;
             const res = await axios.put(api, {
                 data: {
                     ...tempData,
@@ -46,7 +77,7 @@ export default function OrderModal({ closeProductModal, getOrders, tempOrder}){
 
     return(
     <div   className='modal fade'
-           tabIndex='-1'
+           tabIndex={-1}
            id='orderModal'
            aria-labelledby='exampleModalLabel'
            aria-hidden='true'>
@@ -54,7 +85,7 @@ export default function OrderModal({ closeProductModal, getOrders, tempOrder}){
             <div className='modal-content'>
                 <div className='modal-header'>
                     <h1 className='modal-title fs-5' id='exampleModalLabel'>
-                        {`編輯 ${tempData.id}`}
+                        {`編輯 ${tempData?.id}`}
                     </h1>
                     <button
                         type='button'
@@ -105,14 +136,14 @@ export default function OrderModal({ closeProductModal, getOrders, tempOrder}){
                 <textarea
                     name=''
                     id=''
-                    cols='30'
+                    cols={30}
                     readOnly
                     className='form-control-plaintext'
-                    defaultValue={tempOrder.message}
+                    defaultValue={tempOrder?.message}
                 />
                         </div>
                     </div>
-                    {tempOrder.products && (
+                    {tempOrder?.products && (
                         <table className='table'>
                             <thead>
                             <tr>
@@ -122,7 +153,7 @@ export default function OrderModal({ closeProductModal, getOrders, tempOrder}){
                             </thead>
                             <tbody>
                             {Object.values(tempOrder.products).map((cart) => (
-                                <tr key={cart.id}>
+                                <tr key={cart?.id}>
                                     <td>{cart.product.title}</td>
                                     <td>{cart.qty}</td>
                                 </tr>

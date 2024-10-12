@@ -9,8 +9,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import axios from 'axios';
 axios.defaults.baseURL = process.env.REACT_APP_DEPLOY_BASE_URL;
 
+const rootElement = document.getElementById('root');
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(rootElement as HTMLElement);
 root.render(
     // <React.StrictMode>
     <HashRouter>

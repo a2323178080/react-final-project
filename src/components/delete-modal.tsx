@@ -1,8 +1,14 @@
-export default function DeleteModal({close, text, handleDelete, id}) {
+interface DeleteModalProps {
+    close: () => void;
+    text: string;
+    handleDelete: (id: number) => void;
+    id: number;
+}
 
+export default function DeleteModal({close, text, handleDelete, id}: DeleteModalProps) {
     return (
         <div className='modal fade'
-             tabIndex='-1'
+             tabIndex={-1}
              id='deleteModal'
              aria-labelledby='exampleModalLabel'
              aria-hidden='true'>

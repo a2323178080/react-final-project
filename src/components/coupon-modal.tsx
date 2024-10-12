@@ -1,15 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {message} from "antd";
-export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }){
-    const [tempData, setTempData] = useState({
+
+interface Coupon {
+    id?: number;
+    title: string;
+    percent: number;
+    due_date: number;
+    code: string;
+    is_enabled: number;
+}
+
+interface CouponModalProps {
+    closeModal: () => void;
+    getCoupons: () => void;
+    type: string;
+    tempCoupon?: Coupon | null;
+}
+export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }: CouponModalProps){
+    const [tempData, setTempData] = useState<Coupon>({
         title: '',
         is_enabled: 1,
         percent: 80,
         due_date: 1555459200,
         code: 'testCode',
     });
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState<Date>(new Date());
 
     useEffect(() => {
         if (type === 'create') {
@@ -22,12 +38,12 @@ export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }
             });
             setDate(new Date());
         } else if (type === 'edit') {
-            setTempData(tempCoupon);
-            setDate(new Date(tempCoupon.due_date))
+            setTempData(tempCoupon as Coupon);
+            setDate(new Date(tempCoupon?.due_date as number))
         }
     }, [type, tempCoupon]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target;
         if (['price', 'origin_price'].includes(name)) {
             setTempData({
@@ -57,13 +73,13 @@ export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }
         try {
             // 新增優惠券
             let api = `/admin/coupon`
-            let method = 'post';
+            let method= 'post';
             if (type === 'edit') {
                 // 編輯優惠券
-                api = `/admin/coupon/${tempCoupon.id}`;
+                api = `/admin/coupon/${tempCoupon?.id}`;
                 method = 'put';
             }
-            const res = await axios[method](
+            const res = await (axios as any)[method](
                 api,
                 {
                     data: {
@@ -75,14 +91,14 @@ export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }
             getCoupons();
             closeModal();
             type==="create"?message.success("建立成功"):message.success("編輯成功")
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
             message.error(error.response?.data.message.join("、"))
         }
     };
     return(
     <div className='modal fade'
-         tabIndex='-1'
+         tabIndex={-1}
          id='productModal'
          aria-labelledby='exampleModalLabel'
          aria-hidden='true'>
@@ -142,10 +158,10 @@ export default function CouponModal({ closeModal, getCoupons, type, tempCoupon }
                                         date.getMonth() + 1
                                     )
                                         .toString()
-                                        .padStart(2, 0)}-${date
+                                        .padStart(2, '0')}-${date
                                         .getDate()
                                         .toString()
-                                        .padStart(2, 0)}`}
+                                        .padStart(2, '0')}`}
                                     onChange={(e) => {
                                         setDate(new Date(e.target.value));
                                     }}

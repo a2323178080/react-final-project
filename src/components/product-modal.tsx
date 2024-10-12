@@ -2,8 +2,39 @@ import axios from "axios";
 import {useState, useEffect} from "react";
 import {message} from 'antd';
 
-export default function ProductModal({closeProductModal, getProducts, type, tempProduct, pageIndex}) {
-    const [tempData, setTempData] = useState({
+interface ProductModalProps {
+    closeProductModal: () => void;
+    getProducts: (pageIndex: number) => void;
+    type: string;
+    tempProduct?: {
+        id: number;
+        title: string;
+        category: string;
+        origin_price: number;
+        price: number;
+        unit: string;
+        description: string;
+        content: string;
+        is_enabled: number;
+        imageUrl: string;
+    };
+    pageIndex: number;
+}
+
+interface TempData {
+    title: string;
+    category: string;
+    origin_price: number;
+    price: number;
+    unit: string;
+    description: string;
+    content: string;
+    is_enabled: number;
+    imageUrl: string;
+}
+
+export default function ProductModal({closeProductModal, getProducts, type, tempProduct, pageIndex}: ProductModalProps) {
+    const [tempData, setTempData] = useState<TempData >({
         title: '',
         category: '',
         origin_price: 100,
@@ -28,11 +59,11 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                 is_enabled: 1,
                 imageUrl: '',
             });
-        } else if (type === 'edit') {
+        } else if (type === 'edit' && tempProduct) {
             setTempData(tempProduct);
         }
     }, [type, tempProduct]);
-    const handleChange = (e) => {
+    const handleChange = (e: any) => {
         const {value, name} = e.target;
         if (['price', 'origin_price'].includes(name)) {
             setTempData({
@@ -59,10 +90,10 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             let method = 'post';
             if (type === 'edit') {
                 // 編輯後台產品
-                api = `/admin/product/${tempProduct.id}`;
+                api = `/admin/product/${tempProduct?.id}`;
                 method = 'put';
             }
-            const res = await axios[method](
+            const res = await (axios as any)[method](
                 api,
                 {
                     data: tempData,
@@ -71,13 +102,13 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             getProducts(pageIndex)
             closeProductModal()
             type==="create"?message.success("建立成功"):message.success("編輯成功")
-        } catch (error) {
+        } catch (error: any) {
             console.log(error.response);
             message.error(error.response?.data.message.join("、"))
         }
     }
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+    const handleFileChange = (e: any) => {
+        const file = e.target.files?.[0];
 
         if (file) {
             // 使用FileReader读取文件并将其转换为DataURL
@@ -85,7 +116,7 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             reader.onloadend = () => {
                 setTempData({
                     ...tempData,
-                    imageUrl: reader.result,
+                    imageUrl: reader.result as string,
                 });
             };
             reader.readAsDataURL(file);
@@ -95,7 +126,7 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
     return (
         <div
             className='modal fade mt-5'
-            tabIndex='-1'
+            tabIndex={-1}
             id='productModal'
             aria-labelledby='exampleModalLabel'
             aria-hidden='true'
@@ -223,7 +254,6 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                                     <label className='w-100' htmlFor='description'>
                                         產品描述
                                         <textarea
-                                            type='text'
                                             id='description'
                                             name='description'
                                             placeholder='請輸入產品描述'
@@ -237,7 +267,6 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                                     <label className='w-100' htmlFor='content'>
                                         說明內容
                                         <textarea
-                                            type='text'
                                             id='content'
                                             name='content'
                                             placeholder='請輸入產品說明內容'

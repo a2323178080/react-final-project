@@ -3,11 +3,36 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { message } from "antd";
 
+interface Product {
+  id: number;
+  imageUrl: string;
+  title: string;
+  content: string;
+}
+
+interface CartItem {
+  id: number;
+  product: Product;
+  qty: number;
+  final_total: number;
+  product_id: number;
+}
+
+interface CartData {
+  carts: CartItem[];
+  final_total: number;
+}
+
+interface OutletContext {
+  cartData: CartData;
+  getCart: () => void;
+}
+
 export default function Cart() {
-  const { cartData, getCart } = useOutletContext();
-  const [loadingItems, setLoadingItem] = useState([]);
+  const { cartData, getCart } = useOutletContext<OutletContext>();
+  const [loadingItems, setLoadingItem] = useState<number[]>([]);
   const navigate = useNavigate();
-  const removeCartItem = async (id) => {
+  const removeCartItem = async (id: number) => {
     try {
       const res = await axios.delete(
           // 刪除購物車
@@ -19,7 +44,7 @@ export default function Cart() {
       message.error("刪除失敗");
     }
   };
-  const updateCartItem = async (item, quantity) => {
+  const updateCartItem = async (item: CartItem, quantity: number) => {
     const data = {
       data: {
         product_id: item.product_id,
@@ -95,7 +120,7 @@ export default function Cart() {
                         value={item.qty}
                         disabled={loadingItems.includes(item.id)}
                         onChange={(e) => {
-                          updateCartItem(item, e.target.value * 1);
+                          updateCartItem(item, Number(e.target.value));
                         }}
                       >
                         {[...new Array(20)].map((i, num) => {

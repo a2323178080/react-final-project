@@ -1,7 +1,13 @@
 import {useState} from "react";
 
+interface Message {
+    type: string;
+    title: string;
+    text: string;
+}
+
 export default function Message() {
-    const [message, setMessage] = useState({})
+    const [message, setMessage] = useState<Message | null>(null)
 
     return (
         <div>
@@ -14,7 +20,7 @@ export default function Message() {
                         text: '這是一段成功的訊息',
                     });
                     setTimeout(() => {
-                        setMessage({});
+                        setMessage(null);
                     }, 3000);
                 }}
             >
@@ -24,15 +30,15 @@ export default function Message() {
                 className='toast-container position-fixed'
                 style={{top: '64px', right: '15px'}}
             >
-                {message.title && (
+                {message?.title && (
                     <div
                         className='toast show'
                         role='alert'
                         aria-live='assertive'
                         aria-atomic='true'
                     >
-                        <div className={`toast-header text-white bg-${message.type}`}>
-                            <strong className='me-auto'>{message.title}</strong>
+                        <div className={`toast-header text-white bg-${message?.type}`}>
+                            <strong className='me-auto'>{message?.title}</strong>
                             <button
                                 type='button'
                                 className='btn-close'

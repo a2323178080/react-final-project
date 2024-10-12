@@ -1,13 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import OrderModal from "../../../components/order-modal";
+// @ts-ignore
 import { Modal } from "bootstrap";
 import {Pagination,message} from 'antd';
+
+interface User {
+    name: string;
+    email: string;
+    address?: string;
+}
+
+interface Order {
+    id: number;
+    user: User | null;
+    total: number;
+    is_paid: string;
+    paid_date: number | null;
+    message: string;
+    products?: {
+        id: number;
+        product: {
+            title: string;
+        };
+        qty: number;
+    }[];
+}
+
+interface PaginationInfo {
+    total_pages: number;
+}
 export default function AdminOrders(){
-    const [orders, setOrders] = useState([]);
-    const [pagination, setPagination] = useState({});
-    const [tempOrder, setTempOrder] = useState({});
-    const orderModal = useRef(null);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [pagination, setPagination] = useState<PaginationInfo>({total_pages: 0});
+    const [tempOrder, setTempOrder] = useState<Order | null>(null);
+    const orderModal = useRef<Modal | null>(null);
     useEffect(() => {
         orderModal.current = new Modal('#orderModal', {
             backdrop: 'static',
@@ -19,19 +46,19 @@ export default function AdminOrders(){
             // 取得訂單
             `/admin/orders?page=${page}&pageSize=5`
         );
-        setOrders(res.data.orders);
+        setOrders(res?.data?.orders);
         setPagination(res.data.pagination);
     }
-    const openOrderModal = (order) => {
+    const openOrderModal = (order: Order) => {
         setTempOrder(order);
         orderModal.current.show();
     }
     const closeOrderModal = () => {
-        setTempOrder({});
+        setTempOrder(null);
         orderModal.current.hide();
     }
-    const [current, setCurrent] = useState(1);
-    const switchPage = (page) => {
+    const [current, setCurrent] = useState<number>(1);
+    const switchPage = (page: number) => {
         getOrders(page)
         setCurrent(page);
     };
@@ -40,7 +67,7 @@ export default function AdminOrders(){
         <OrderModal
             closeProductModal={closeOrderModal}
             getOrders={getOrders}
-            tempOrder={tempOrder}
+            tempOrder={tempOrder as any}
         />
         <h3>訂單列表</h3>
         <hr />
@@ -57,15 +84,15 @@ export default function AdminOrders(){
             </tr>
             </thead>
             <tbody>
-            {orders.map((order) => {
+            {orders?.map((order) => {
                 return (
-                    <tr key={order.id}>
-                        <td>{order.id}</td>
+                    <tr key={order?.id}>
+                        <td>{order?.id}</td>
                         <td>
-                            <span>{order.user?.name}</span>&emsp;
-                            <span>email:{order.user?.email}</span>
+                            <span>{order?.user?.name}</span>&emsp;
+                            <span>email:{order?.user?.email}</span>
                         </td>
-                        <td>${order.total}</td>
+                        <td>${order?.total}</td>
                         <td>
                             {order.is_paid ? (
                                 <span className='text-success fw-bold'>付款完成</span>
@@ -78,7 +105,7 @@ export default function AdminOrders(){
                                 ? new Date(order.paid_date * 1000).toLocaleString()
                                 : '-'}
                         </td>
-                        <td>{order.message}</td>
+                        <td>{order?.message}</td>
                         <td>
                             <button
                                 type='button'
@@ -96,7 +123,7 @@ export default function AdminOrders(){
             </tbody>
         </table>
         <div className="mt-5">
-            <Pagination current={current} onChange={switchPage} total={parseInt(pagination.total_pages, 10) * 10|| 0}/>
+            <Pagination current={current} onChange={switchPage} total={parseInt(String(pagination.total_pages), 10) * 10|| 0}/>
         </div>
     </div>
     )

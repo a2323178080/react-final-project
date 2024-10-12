@@ -2,11 +2,35 @@ import { Link, useOutletContext, useNavigate } from "react-router-dom";
 import { Button, Checkbox, Form, Input } from "antd";
 import "./checkout.scss";
 import axios from "axios";
+
+interface CartItem {
+  product: {
+    imageUrl?: string;
+    title?: string;
+    price?: number;
+  };
+  qty?: number;
+  final_total?: number;
+}
+
+interface CartData {
+  carts?: CartItem[];
+  final_total?: number;
+}
+
+// 定义 FormValues 的类型
+interface FormValues {
+  name?: string;
+  tel?: string;
+  email?: string;
+  address?: string;
+}
+
 export default function Checkout() {
-  const { cartData } = useOutletContext();
+  const { cartData } = useOutletContext<{ cartData: CartData }>();
   const navigate = useNavigate();
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: FormValues) => {
     const data = {
       data: {
         user: values,

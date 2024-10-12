@@ -3,12 +3,24 @@ import axios from "axios";
 import {Pagination} from 'antd';
 import { Link } from "react-router-dom";
 import "./products.scss"
-export default function Products() {
-  const [products, setProducts] = useState([]);
-  const [pagination, setPagination] = useState({});
-  const [current, setCurrent] = useState(1);
 
-  const getProducts = async (page = 1) => {
+interface Product {
+  id: number;
+  title: string;
+  content: string;
+  price: number;
+  imageUrl: string;
+}
+
+interface PaginationData {
+  total_pages: number;
+}
+export default function Products() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [pagination, setPagination] = useState<PaginationData>({ total_pages: 0 });
+  const [current, setCurrent] = useState<number>(1);
+
+  const getProducts = async (page: number = 1) => {
     const productRes = await axios.get(
        // 取得商品
       `/products?page=${page}&pageSize=5`
@@ -21,7 +33,7 @@ export default function Products() {
     getProducts(1);
   }, []);
 
-  const switchPage = (page) => {
+  const switchPage = (page: number) => {
     getProducts(page)
     setCurrent(page);
   };
@@ -53,7 +65,7 @@ export default function Products() {
           })}
         </div>
         <div className="mt-5">
-          <Pagination current={current} onChange={switchPage} total={parseInt(pagination.total_pages, 10) * 10||0}/>
+          <Pagination current={current} onChange={switchPage} total={parseInt(String(pagination.total_pages), 10) * 10||0}/>
         </div>
       </div>
       </div>

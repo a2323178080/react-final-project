@@ -5,21 +5,30 @@ import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import Navbar from "../../components/navbar";
 
+interface LoginState {
+  message?: string;
+}
+
+interface FormData {
+  username: string;
+  password: string;
+}
+
 export default function Login() {
-  const [loginState, setLoginState] = useState({});
+  const [loginState, setLoginState] = useState<LoginState>({});
   const navigate = useNavigate();
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<FormData>({
     username: "",
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
 
-  const submit = async (e) => {
+  const submit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       const res = await axios.post(
           // 登入
@@ -32,7 +41,7 @@ export default function Login() {
       if (res?.data?.success) {
         navigate("/admin/adminProducts");
       }
-    } catch (error) {
+    } catch (error: any) {
       setLoginState(error.response?.data);
       message.error("登入失敗");
     }

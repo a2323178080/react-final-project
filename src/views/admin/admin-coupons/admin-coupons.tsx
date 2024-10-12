@@ -2,18 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import DeleteModal from "../../../components/delete-modal";
 import CouponModal from "../../../components/coupon-modal";
+// @ts-ignore
 import { Modal } from "bootstrap";
 import {Pagination,message} from 'antd';
-export default function AdminCoupons(){
-    const [coupons, setCoupons] = useState([]);
-    const [pagination, setPagination] = useState({});
-    // type: 決定 modal 展開的用途
-    const [type, setType] = useState('create'); // edit
-    const [tempCoupon, setTempCoupon] = useState({});
-    const [current, setCurrent] = useState(1);
 
-    const couponModal = useRef(null);
-    const deleteModal = useRef(null);
+interface Coupon {
+    id?: number;
+    title: string;
+    percent: number;
+    due_date: number;
+    code: string;
+    is_enabled: number;
+}
+
+interface PaginationInfo {
+    total_pages: number;
+}
+export default function AdminCoupons(){
+    const [coupons, setCoupons] = useState<Coupon[]>([]);
+    const [pagination, setPagination] = useState<PaginationInfo>({ total_pages: 0 });
+    // type: 決定 modal 展開的用途
+    const [type, setType] = useState<string>('create'); // edit
+    const [tempCoupon, setTempCoupon] = useState<Coupon | undefined>(undefined);
+    const [current, setCurrent] = useState<number>(1);
+
+    const couponModal = useRef<Modal | null>(null);
+    const deleteModal = useRef<Modal | null>(null);
     useEffect(() => {
         couponModal.current = new Modal('#productModal', {
             backdrop: 'static',
@@ -24,7 +38,7 @@ export default function AdminCoupons(){
 
         getCoupons();
     }, []);
-    const getCoupons = async (page = 1) => {
+    const getCoupons = async (page: number  = 1) => {
         const res = await axios.get(
             // 取得優惠券
             `/admin/coupons?page=${page}&pageSize=5`
@@ -33,7 +47,7 @@ export default function AdminCoupons(){
         setPagination(res.data.pagination);
     }
 
-    const openCouponModal = (type, item) => {
+    const openCouponModal = (type: string, item: any) => {
         setType(type);
         setTempCoupon(item);
         couponModal.current.show();
@@ -42,14 +56,14 @@ export default function AdminCoupons(){
         couponModal.current.hide();
     }
 
-    const openDeleteModal = (product) => {
+    const openDeleteModal = (product: Coupon) => {
         setTempCoupon(product);
         deleteModal.current.show();
     };
     const closeDeleteModal = () => {
         deleteModal.current.hide();
     };
-    const deleteCoupon = async (id) => {
+    const deleteCoupon = async (id: number) => {
         try {
             const res = await axios.delete(
                 // 刪除優惠券
@@ -64,7 +78,7 @@ export default function AdminCoupons(){
             console.log(error);
         }
     }
-    const switchPage = (page) => {
+    const switchPage = (page: number) => {
         getCoupons(page)
         setCurrent(page);
     };
@@ -74,14 +88,14 @@ export default function AdminCoupons(){
         <CouponModal
             closeModal={closeModal}
             getCoupons={getCoupons}
-            tempCoupon={tempCoupon}
+            tempCoupon={tempCoupon }
             type={type}
         />
         <DeleteModal
             close={closeDeleteModal}
-            text={tempCoupon.title}
+            text={tempCoupon?.title as string}
             handleDelete={deleteCoupon}
-            id={tempCoupon.id}
+            id={tempCoupon?.id as number}
         />
         <h3>優惠券列表</h3>
         <hr />
@@ -136,7 +150,7 @@ export default function AdminCoupons(){
             </tbody>
         </table>
         <div className="mt-5">
-            <Pagination current={current} onChange={switchPage} total={parseInt(pagination.total_pages, 10) * 10||0}/>
+            <Pagination current={current} onChange={switchPage} total={parseInt(String(pagination.total_pages), 10) * 10||0}/>
         </div>
     </div>
     )
