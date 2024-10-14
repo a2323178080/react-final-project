@@ -2,8 +2,7 @@ import "./assets/index.scss";
 import {HashRouter} from "react-router-dom";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// @ts-ignore
-import App from '/App.tsx';
+import App from './App'
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
