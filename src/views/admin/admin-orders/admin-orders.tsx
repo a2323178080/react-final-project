@@ -84,7 +84,9 @@ export default function AdminOrders(){
             </tr>
             </thead>
             <tbody>
-            {orders?.map((order) => {
+            {orders
+                ?.reverse()
+                ?.map((order) => {
                 return (
                     <tr key={order?.id}>
                         <td>{order?.id}</td>

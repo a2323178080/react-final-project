@@ -1,5 +1,5 @@
 import axios from "axios";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import {message} from 'antd';
 
 interface ProductModalProps {
@@ -45,6 +45,8 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
         is_enabled: 1,
         imageUrl: '',
     });
+
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     useEffect(() => {
         if (type === 'create') {
@@ -104,7 +106,7 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             type==="create"?message.success("建立成功"):message.success("編輯成功")
         } catch (error: any) {
             console.log(error.response);
-            message.error(error.response?.data.message.join("、"))
+            message.error(error.response?.data.message?.join("、"))
         }
     }
     const handleFileChange = (e: any) => {
@@ -121,6 +123,13 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const closeModal = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+        closeProductModal();
     };
 
     return (
@@ -141,7 +150,7 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                             type='button'
                             className='btn-close'
                             aria-label='Close'
-                            onClick={closeProductModal}
+                            onClick={closeModal}
                         />
                     </div>
                     <div className='modal-body'>
@@ -169,6 +178,7 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                                             id='customFile'
                                             className='form-control'
                                             onChange={handleFileChange}
+                                            ref={fileInputRef}
                                         />
                                     </label>
                                 </div>
@@ -302,7 +312,7 @@ export default function ProductModal({closeProductModal, getProducts, type, temp
                         <button
                             type='button'
                             className='btn btn-secondary'
-                            onClick={closeProductModal}
+                            onClick={closeModal}
                         >
                             關閉
                         </button>

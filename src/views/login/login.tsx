@@ -83,7 +83,7 @@ export default function Login() {
                   className="form-control"
                   name="password"
                   id="password"
-                  placeholder="name@example.com"
+                  placeholder="password"
                   onChange={handleChange}
                 />
               </label>

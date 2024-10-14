@@ -64,7 +64,7 @@ export default function Products() {
             );
           })}
         </div>
-        <div className="mt-5">
+        <div className="mt-5 d-flex justify-content-center">
           <Pagination current={current} onChange={switchPage} total={parseInt(String(pagination.total_pages), 10) * 10||0}/>
         </div>
       </div>
