@@ -38,10 +38,10 @@ export default function Navbar({cartData,cartIcon}: NavbarProps) {
           </NavLink>
           <div className="d-flex order-md-last gap-3">
             <NavLink to="/login" className="nav-link">
-              <UserOutlined style={{ fontSize: "25px" }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              <UserOutlined style={{ fontSize: "25px" }} />
             </NavLink>
             {cartIcon&& <NavLink to="/cart" className="nav-link position-relative">
-              <ShoppingCartOutlined style={{ fontSize: "25px" }} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined} />
+              <ShoppingCartOutlined style={{ fontSize: "25px" }} />
               <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
                 {cartData?.carts?.length}
               </span>
